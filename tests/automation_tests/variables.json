@@ -1,0 +1,8 @@
+{
+  "admin_email": "mr@endoca.com",
+  "admin_pass" : "12345",
+  "url": "http://192.168.126.50/",
+  "email": "sometestemail@mail.com",
+  "pass": "needStrongPass12345&&",
+  "last_name": "DevTest"
+}
