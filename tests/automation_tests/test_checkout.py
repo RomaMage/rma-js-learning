@@ -1,21 +1,27 @@
 from commands import *
-from pages.shop import Shop
 from pages.my_account import myAccount
 from pages.checkout import Checkout
+from pages.shop import Shop
 import time
 
 def test_checkout_by_admin(driver, variables):
-    my_account_page = myAccount(driver, variables['url'] + 'my-account').open()
+    start_testing(driver, variables)
     login = myAccount(driver, variables)
-    login.authorize(variables)
-    shop_page = Shop(driver, variables['url'] + 'shop').open()
-    addproduct = Shop(driver, variables)
-    addproduct.buy_product()
-    checkout_page = Checkout(driver, variables['url'] + 'checkout').open()
-    time.sleep(20)
-    # checkout = Checkout(driver, variables)
-    # assert checkout.check_products_in_cart == True
-    # checkout.fill_billing_details()
-    # checkout.fill_payment_details()
-    # checkout.fill_terms()
-    # checkout.place_order()
+    login.login_user(driver, variables)
+    # buy product
+    shop = Shop(driver, variables)
+    shop.buy_product(driver, variables)
+    # fill checkout data
+    checkout = Checkout(driver, variables)
+    checkout.fill_checkout(driver, variables)
+    assert checkout.check_order_details() == True
+
+def test_checkout_by_guest(driver, variables):
+    start_testing(driver, variables)
+    # buy product
+    shop = Shop(driver, variables)
+    shop.buy_product(driver, variables)
+    # fill checkout data
+    checkout = Checkout(driver, variables)
+    checkout.fill_checkout(driver, variables)
+    assert checkout.check_order_details() == True
